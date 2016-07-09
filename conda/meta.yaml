@@ -1,0 +1,23 @@
+package:
+  name: hide_modules
+  version: "0.0.0+git"
+
+source:
+  path: ..
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+
+test:
+  files:
+    - ../hide_modules/test/test_hide_modules.py
+  commands:
+    - "python test_hide_modules.py"
+
+about:
+  home: "https://github.com/roryyorke/py-hide-modules"
+  license:  "MIT License"
+  summary: "Temporarily hide modules from importer; could be useful for testing 'catch ImportError' blocks."
