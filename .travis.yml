@@ -20,4 +20,4 @@ install:
   - conda install conda-build
 
 script:
-  - conda build --python --quiet "$TRAVIS_PYTHON_VERSION" conda
+  - conda build --python "$TRAVIS_PYTHON_VERSION" --quiet conda
