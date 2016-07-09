@@ -6,7 +6,7 @@ python:
   - "3.4"
   - "3.5"
 
-before_install:
+install:
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
       wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
     else
@@ -19,5 +19,5 @@ before_install:
   - conda update -q conda
   - conda install conda-build
 
-install:
-  - conda build --python "$TRAVIS_PYTHON_VERSION" conda
+script:
+  - conda build --python --quiet "$TRAVIS_PYTHON_VERSION" conda
