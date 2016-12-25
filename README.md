@@ -1,4 +1,4 @@
-This is utility to temporarily make a module hidden from import; the
+This is a utility to temporarily make a module hidden from import; the
 motivating application is to have test coverage of the catch-block in:
 
 ````python
@@ -20,7 +20,7 @@ class TestFrobnicator(object):
 ````
 
 Passes tests on Python 2.7, Python 3.4, and PyPy 2.7 on Ubuntu 14.04,
-and Python 2.7, 3.2, 3.3, 3.4, PyPy, and PyPy3 on Travis CI.
+and Python 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, PyPy, and PyPy3 on Travis CI.
 
 Don't use this on core modules like "sys".
 
