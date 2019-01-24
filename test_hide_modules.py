@@ -24,7 +24,7 @@ def blocked_import_wsgiref_handlers():
 
 
 class TestHideModules(unittest.TestCase):
-    
+
     def testHideUnhide(self):
         "Test ModuleHider hide and unhide methods"
         mh = hide_modules.ModuleHider(['csv', 'wsgiref.handlers'])
@@ -61,6 +61,26 @@ class TestHideModules(unittest.TestCase):
         "Test hide_modules applied to test method"
         self.assertRaises(ImportError, import_csv)
         self.assertRaises(ImportError, import_wsgiref_handlers)
+
+    def testRestoringHiddenNumpy(self):
+        """
+        Numpy has a complicated internal import scheme that requires special
+        handling with python 2.7.
+        """
+        def fallback_on_import():
+            try:
+                import numpy
+                self.assertTrue(False)
+            except ImportError:
+                pass
+
+        @hide_modules.hide_modules(['numpy'])
+        def fn():
+            fallback_on_import()
+
+        import numpy
+        fn()
+        import numpy
 
 
 if __name__ == '__main__':
