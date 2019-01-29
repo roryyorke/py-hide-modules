@@ -22,6 +22,7 @@ class ModuleHider(_ModuleHiderBase):
 
     def __init__(self, hidden):
         self.hidden = hidden
+        self.hidden_modules = {}
 
     # python <=3.3
     def find_module(self, fullname, path=None):
@@ -42,12 +43,15 @@ class ModuleHider(_ModuleHiderBase):
         # remove hidden modules to force reload
         for m in self.hidden:
             if m in sys.modules:
+                self.hidden_modules[m] = sys.modules[m]
                 del sys.modules[m]
 
     def unhide(self):
         "Unhide modules"
         import sys
         sys.meta_path.remove(self)
+        sys.modules.update(self.hidden_modules)
+        self.hidden_modules.clear()
 
     def __enter__(self):
         self.hide()
