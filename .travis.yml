@@ -10,4 +10,6 @@ python:
   - "pypy"
   - "pypy3"
 
-script: nosetests
+script:
+  - nosetests
+  - python example.py
