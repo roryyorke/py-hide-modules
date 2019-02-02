@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/roryyorke/py-hide-modules.svg?branch=master)](https://travis-ci.org/roryyorke/py-hide-modules)
+
+Introduction
+============
+
 This is a utility to temporarily make a module hidden from import; the
 motivating application is to have test coverage of the except clause
 in code like this:
@@ -41,7 +46,7 @@ hiding starts and stops.  In case it isn't obvious, the hiding must
 start *before* the relevant import statement is executed!
 
 Passes tests on Python 2.7, Python 3.4, and PyPy 2.7 on Ubuntu 14.04,
-and Python 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, PyPy, and PyPy3 on Travis CI.
+and Python 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, PyPy, and PyPy3 on Travis CI.
 
 Don't use this on core modules like `sys`.
 
@@ -49,4 +54,21 @@ If the handling of a missing module is simple, as in the example
 above, you may be better off just marking the line as being excluded
 from testing, e.g., https://coverage.readthedocs.org/en/coverage-4.0a5/excluding.html
 
-[![Build Status](https://travis-ci.org/roryyorke/py-hide-modules.svg?branch=master)](https://travis-ci.org/roryyorke/py-hide-modules)
+Installation
+============
+
+Copy `hide_modules.py` to your test directory.
+
+Limitations
+===========
+
+You should only use this in test code, and only to test `ImportError`
+branches.
+
+Ideally, you would run all tests that rely on a particular module
+being hidden _before_ that module is _ever_ imported. `hide_modules`
+will probably work anyway: if an already-imported module is hidden, it
+is temporarily removed from `sys.modules`, and this may be sufficient
+for many or even most cases.  However, side-effects that occur due to
+a module being imported _cannot_ be hidden or undone; such a
+side-effect might be the imported module monkey-patching another.
