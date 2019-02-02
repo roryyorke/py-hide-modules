@@ -62,25 +62,29 @@ class TestHideModules(unittest.TestCase):
         self.assertRaises(ImportError, import_csv)
         self.assertRaises(ImportError, import_wsgiref_handlers)
 
-    def testRestoringHiddenNumpy(self):
-        """
-        Numpy has a complicated internal import scheme that requires special
-        handling with python 2.7.
+    def testRestoringHiddenModules(self):
+        """Test that unhidden modules are restored.
+
+        Some packages---e.g., encodings from stdlib, and numpy---must
+        be restored to sys.modules, or they cannot be re-imported.
+
+        This is a regression test; modules were previously *not*
+        restored, which caused problems in Python 2.
         """
         def fallback_on_import():
             try:
-                import numpy
+                import encodings
                 self.assertTrue(False)
             except ImportError:
                 pass
 
-        @hide_modules.hide_modules(['numpy'])
+        @hide_modules.hide_modules(['encodings'])
         def fn():
             fallback_on_import()
 
-        import numpy
+        import encodings
         fn()
-        import numpy
+        import encodings
 
 
 if __name__ == '__main__':
